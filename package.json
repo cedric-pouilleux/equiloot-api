@@ -9,6 +9,8 @@
   "author": "Cedric Pouilleux",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongodb": "^6.5.0"
   }
 }

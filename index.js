@@ -1,16 +1,25 @@
 'use strict'
-
+const cors = require('cors')
 const express = require('express')
+const { MongoClient } = require("mongodb");
 
-// Constants
-const PORT = 4000
-const HOST = '0.0.0.0'
+const uri = "mongodb://mongo:27017";
 
-// App
-const app = express()
-app.get('/', (req, res) => {
-    res.send('Hello world node js\n')
+const app = express();
+
+app.use(cors());
+
+app.get('/items', async (req, res) => {
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        await client.db("equiloot").command({ ping: 1 });
+    } finally {
+        await client.close();
+    }
+    res.json({
+        'test' : 'test'
+    })
 })
 
-app.listen(PORT, HOST)
-console.log(`Running on http://${HOST}:${PORT}`);
+app.listen(4000, '0.0.0.0')
