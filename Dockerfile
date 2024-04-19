@@ -1,27 +1,15 @@
-FROM node:20-alpine as base
+FROM node:lts-bullseye-slim as base
 
-ENV NODE_ENV production
+WORKDIR /usr/src/api
 
-WORKDIR /src
-
-FROM base as build
-
-COPY --link package*.json ./
-
-# RUN npm ci --only=production
+COPY package*.json ./
 
 RUN npm install
 
-COPY --link . .
+COPY . .
 
 RUN npm run build
-RUN npm prune
-
-FROM base
-
-COPY --from=build /src/dist /src/dist
-COPY --from=build /src/node_modules /src/node_modules
 
 EXPOSE 4000
 
-CMD ["npm", "run", "prod"]
+CMD [ "npm", "run", "prod" ]
