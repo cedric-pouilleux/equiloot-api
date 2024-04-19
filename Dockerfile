@@ -1,15 +1,27 @@
-ARG NODE_VERSION=20.12.2
+FROM node:20-alpine as base
 
-FROM node:${NODE_VERSION}-slim as base
+ENV NODE_ENV production
 
-WORKDIR /usr/src/api
+WORKDIR /src
 
-COPY package*.json ./
+FROM base as build
+
+COPY --link package*.json ./
+
+# RUN npm ci --only=production
 
 RUN npm install
 
-COPY . .
+COPY --link . .
+
+RUN npm run build
+RUN npm prune
+
+FROM base
+
+COPY --from=build /src/dist /src/dist
+COPY --from=build /src/node_modules /src/node_modules
 
 EXPOSE 4000
 
-CMD [ "npm", "start" ]
+CMD ["npm", "run", "prod"]
