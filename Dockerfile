@@ -1,5 +1,7 @@
 FROM node:lts-bullseye-slim as base
 
+ENV NODE_ENV=${NODE_ENV}
+
 WORKDIR /usr/src/api
 
 RUN npm install -g pnpm
