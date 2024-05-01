@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prebuild": "rimraf dist",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint:check": "eslint",
