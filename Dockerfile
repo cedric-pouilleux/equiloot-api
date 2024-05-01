@@ -21,8 +21,9 @@ RUN pnpm install
 # Run
 FROM base
 
-COPY --from=build /usr/src/api/node_modules /usr/src/api/node_modules
+COPY . .
 
+RUN pnpm run prebuild
 RUN pnpm run build
 
 CMD [ "pnpm", "run", "prod" ]
