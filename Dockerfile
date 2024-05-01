@@ -9,7 +9,7 @@ RUN npm install -g tsup
 RUN npm install -g rimraf
 RUN npm install -g typescript
 
-COPY package*.json ./
+COPY package*.json pnpm-lock.yaml ./
 
 RUN pnpm install
 
