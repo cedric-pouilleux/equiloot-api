@@ -21,6 +21,8 @@ FROM base
 
 COPY . .
 
+EXPOSE 4000
+
 RUN pnpm run prebuild
 RUN pnpm run build
 
