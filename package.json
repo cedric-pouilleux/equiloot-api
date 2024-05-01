@@ -10,7 +10,6 @@
     "lint:check": "eslint",
     "lint:fix": "eslint --fix",
     "dev": "nodemon -L index.ts",
-    "dev-save": "nodemon -L --watch index.ts -e js,ts,json --exec \"ts-node index.ts\"",
     "build": "tsup index.ts --format cjs --clean",
     "prod": "node dist/index.js"
   },

@@ -1,5 +1,7 @@
 FROM node:lts-bullseye-slim as base
 
+ARG PORT=4000
+
 ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /usr/src/api
@@ -20,8 +22,6 @@ RUN pnpm install
 FROM base
 
 COPY . .
-
-EXPOSE 4000
 
 RUN pnpm run prebuild
 RUN pnpm run build
