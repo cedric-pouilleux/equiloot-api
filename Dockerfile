@@ -19,7 +19,7 @@ RUN pnpm install
 # Run
 FROM base
 
-COPY /usr/src/api /usr/src/api
+COPY . .
 
 RUN pnpm run build
 
