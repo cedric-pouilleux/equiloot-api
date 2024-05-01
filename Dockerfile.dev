@@ -1,6 +1,6 @@
 FROM node:lts-bullseye-slim as base
 
-ENV NODE_ENV=${NODE_ENV}
+ENV NODE_ENV=development
 
 WORKDIR /usr/src/api
 
