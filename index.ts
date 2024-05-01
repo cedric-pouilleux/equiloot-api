@@ -1,7 +1,8 @@
 import {Express} from 'express';
-import cors from 'cors';
 import express from 'express';
 import { MongoClient } from "mongodb";
+
+var cors = require('cors');
 
 const uri: string = process.env.MONGO_URL!;
 
