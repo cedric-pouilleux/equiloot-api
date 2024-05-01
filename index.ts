@@ -3,27 +3,24 @@ import cors from 'cors';
 import express from 'express';
 import { MongoClient } from "mongodb";
 
-const uri = "mongodb://localhost:27017";
-
-//const uri = "mongodb://mongo:27017";         
-//with docker
+const uri: string = process.env.MONGO_URL!;
 
 const app: Express = express();
   
-app.use(cors())  
+app.use(cors())
  
 app.get('/items', async (req, res) => {
     const client = new MongoClient(uri);
+    console.log(process.env.NODE_ENV);
     try {
-        await client.connect();
+        await client.connect(); 
         await client.db("equiloot").command({ ping: 1 });
-
-    } finally {
+    } finally { 
         await client.close();
     }
     res.json({
-        'foot': 'bare2'
+        '00105': 'bare2'
     })
 })
 
-app.listen(4000, '0.0.0.0')
+app.listen(4000, '0.0.0.0');
