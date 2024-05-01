@@ -9,15 +9,9 @@ RUN npm install -g tsup
 RUN npm install -g rimraf
 RUN npm install -g typescript
 
-# Build
-FROM base as build
-
 COPY package*.json ./
 
 RUN pnpm install
-
-# Run
-FROM base
 
 COPY . .
 
