@@ -21,6 +21,7 @@ FROM base
 
 COPY . .
 
+RUN pnpm run prebuild
 RUN pnpm run build
 
 CMD [ "pnpm", "run", "prod" ]

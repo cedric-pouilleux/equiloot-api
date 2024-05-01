@@ -12,6 +12,7 @@ app.use(cors())
  
 app.get('/items', async (req, res) => {
     const client = new MongoClient(uri);
+    console.log('ENV: ');
     console.log(process.env.NODE_ENV);
     try {
         await client.connect(); 
@@ -20,7 +21,7 @@ app.get('/items', async (req, res) => {
         await client.close();
     }
     res.json({
-        '00105': 'bare2'
+        'foo': 'bar'
     })
 })
 
