@@ -5,6 +5,7 @@ ENV NODE_ENV=${NODE_ENV}
 WORKDIR /usr/src/api
 
 RUN npm install -g pnpm
+RUN npm install -g tsup
 
 # Build
 FROM base as build
