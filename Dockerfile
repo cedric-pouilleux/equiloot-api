@@ -1,5 +1,7 @@
 FROM node:lts-bullseye-slim as base
 
+ENV NODE_ENV=production
+
 WORKDIR /usr/src/api
 
 RUN npm install -g pnpm
@@ -17,7 +19,7 @@ RUN pnpm install
 # Run
 FROM base
 
-COPY . .
+COPY /usr/src/api /usr/src/api
 
 RUN pnpm run build
 
