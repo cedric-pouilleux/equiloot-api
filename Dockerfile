@@ -18,6 +18,5 @@ COPY . .
 
 RUN pnpm run prebuild
 RUN pnpm run build
-RUN pnpm run populate:db
 
 CMD [ "pnpm", "run", "prod" ]

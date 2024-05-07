@@ -8,6 +8,10 @@ if (!process.env.MONGO_URL) {
   throw new Error("MONGO_URL environment variable required");
 }
 
+if (!process.env.MONGO_BD_NAME) {
+  throw new Error("MONGO_BD_NAME environment variable required");
+}
+
 const app: Express = express();
 app.use(cors());
 
