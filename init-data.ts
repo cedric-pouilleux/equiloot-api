@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 import { ItemSchema, SlotSchema, StuffTypeSchema } from "./db-schemas";
 import fs from "node:fs/promises";
 
+if (!process.env.MONGO_URL) {
+  throw new Error("MONGO_URL environment variable required");
+}
+
 async function insertSlotsFixtures() {
   await SlotSchema.create(
     { name: "Tête" },
