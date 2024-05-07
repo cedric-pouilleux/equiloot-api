@@ -6,8 +6,8 @@ if (!process.env.MONGO_URL) {
   throw new Error("MONGO_URL environment variable required");
 }
 
-if (!process.env.MONGO_BD_NAME) {
-  throw new Error("MONGO_BD_NAME environment variable required");
+if (!process.env.MONGO_DB_NAME) {
+  throw new Error("MONGO_DB_NAME environment variable required");
 }
 
 async function insertSlotsFixtures() {
