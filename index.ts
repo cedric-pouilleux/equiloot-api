@@ -8,8 +8,8 @@ if (!process.env.MONGO_URL) {
   throw new Error("MONGO_URL environment variable required");
 }
 
-if (!process.env.MONGO_BD_NAME) {
-  throw new Error("MONGO_BD_NAME environment variable required");
+if (!process.env.MONGO_DB_NAME) {
+  throw new Error("MONGO_DB_NAME environment variable required");
 }
 
 const app: Express = express();
@@ -18,7 +18,7 @@ app.use(cors());
 app.get("/items", async (req, res) => {
   try {
     await mongoose.connect(process.env.MONGO_URL!, {
-      dbName: process.env.MONGO_BD_NAME,
+      dbName: process.env.MONGO_DB_NAME,
     });
   } catch (e) {
     console.log(e);

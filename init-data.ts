@@ -66,7 +66,6 @@ const stuffGearSchemaFixtures = [
 async function insertSlotsFixtures() {
   try {
     for await (const slot of SlotSchemaFixtures) {
-      console.log(slot);
       await SlotSchema.findOneAndUpdate(slot, slot, {
         upsert: true,
         new: true,
@@ -120,7 +119,6 @@ async function insertItemsFixtures() {
             setDefaultsOnInsert: true,
           }
         );
-        console.log(item);
       }
     })
     .catch((err: any) => {
