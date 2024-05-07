@@ -6,6 +6,7 @@ WORKDIR /usr/src/api
 
 RUN npm install -g pnpm
 RUN npm install -g tsup
+RUN npm install -g ts-node
 RUN npm install -g rimraf
 RUN npm install -g typescript
 
@@ -17,5 +18,6 @@ COPY . .
 
 RUN pnpm run prebuild
 RUN pnpm run build
+RUN pnpm run populate:db
 
 CMD [ "pnpm", "run", "prod" ]
