@@ -68,6 +68,7 @@ async function insertStuffTypesFixtures() {
 }
 
 async function insertItemsFixtures() {
+  console.log("inner insertItemsFixtures");
   fs.readFile("./data.json", "utf-8")
     .then(async (data) => {
       console.log(data);
