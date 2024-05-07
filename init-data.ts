@@ -88,10 +88,10 @@ async function insertItemsFixtures() {
     });
 }
 
-async () => {
+(async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL!, {
-      dbName: process.env.MONGO_BD_NAME,
+      dbName: process.env.MONGO_DB_NAME,
     });
     await insertSlotsFixtures();
     await insertStuffTypesFixtures();
@@ -105,4 +105,4 @@ async () => {
       .exec();
     await mongoose.disconnect();
   }
-};
+})();
