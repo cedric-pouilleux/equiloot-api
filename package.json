@@ -12,7 +12,8 @@
     "dev": "nodemon -L index.ts",
     "build": "tsup *.ts",
     "prod": "node dist/index.js",
-    "populate:db": "node -r ts-node/register --env-file=.env.dev init-data.ts" 
+    "populate:db": "node -r ts-node/register init-data.ts",
+    "populate-dev:db": "node -r ts-node/register --env-file=.env.dev init-data.ts"
   },
   "author": "Cedric Pouilleux",
   "license": "ISC",
