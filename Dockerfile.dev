@@ -5,6 +5,7 @@ ENV NODE_ENV=development
 WORKDIR /usr/src/api
 
 RUN npm install -g pnpm
+RUN npm install -g rimraf
 
 # Build
 FROM base as build
