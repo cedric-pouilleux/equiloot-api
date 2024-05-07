@@ -70,6 +70,7 @@ async function insertStuffTypesFixtures() {
 async function insertItemsFixtures() {
   fs.readFile("./data.json", "utf-8")
     .then(async (data) => {
+      console.log(data);
       const items: any[] = JSON.parse(data);
       for (const item of items) {
         const { gearType, slot } = item;
@@ -107,10 +108,6 @@ async function insertItemsFixtures() {
   } catch (e) {
     console.log(e);
   } finally {
-    const items = await ItemSchema.find()
-      .populate("slot")
-      .populate("gearType")
-      .exec();
     await mongoose.disconnect();
   }
 })();
