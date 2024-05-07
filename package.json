@@ -10,9 +10,9 @@
     "lint:check": "eslint",
     "lint:fix": "eslint --fix",
     "dev": "nodemon -L index.ts",
-    "build": "tsup index.ts",
+    "build": "tsup *.ts",
     "prod": "node dist/index.js",
-    "populate:db": "npx ts-node init-data.ts"
+    "populate:db": "node dist/init-data.js"
   },
   "author": "Cedric Pouilleux",
   "license": "ISC",
