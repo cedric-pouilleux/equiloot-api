@@ -1,28 +1,31 @@
-import {Express} from 'express';
-import express from 'express';
-import { MongoClient } from "mongodb";
+import { type Express } from "express";
+import express from "express";
+import { ItemSchema } from "./db-schemas";
+import cors from "cors";
+import mongoose from "mongoose";
 
-var cors = require('cors');
-
-const uri: string = process.env.MONGO_URL!;
+if (!process.env.MONGO_URL) {
+  throw new Error("MONGO_URL environment variable required");
+}
 
 const app: Express = express();
-  
-app.use(cors())
- 
-app.get('/items', async (req, res) => {
-    const client = new MongoClient(uri);
-    console.log('ENV: ');
-    console.log(process.env.NODE_ENV);
-    try {
-        await client.connect(); 
-        await client.db("equiloot").command({ ping: 1 });
-    } finally { 
-        await client.close();
-    }
-    res.json({
-        'foo': 'bar'
-    })
-})
+app.use(cors());
 
-app.listen(4000, '0.0.0.0');
+app.get("/items", async (req, res) => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL!, {
+      dbName: process.env.MONGO_BD_NAME,
+    });
+  } catch (e) {
+    console.log(e);
+  } finally {
+    const items = await ItemSchema.find()
+      .populate("slot")
+      .populate("gearType")
+      .exec();
+    await mongoose.disconnect();
+    res.json(items);
+  }
+});
+
+app.listen(4000, "0.0.0.0");
