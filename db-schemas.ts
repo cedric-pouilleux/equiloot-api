@@ -33,6 +33,21 @@ export const SlotSchema = mongoose.model(
   })
 );
 
+export const DungeonSchema = mongoose.model(
+  "dungeon",
+  new mongoose.Schema({
+    name: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    slug: {
+      slug: "name",
+      type: String,
+    },
+  })
+);
+
 export const ItemSchema = mongoose.model(
   "item",
   new mongoose.Schema({

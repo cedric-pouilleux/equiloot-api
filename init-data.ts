@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
-import { ItemSchema, SlotSchema, StuffTypeSchema } from "./db-schemas";
+import {
+  ItemSchema,
+  DungeonSchema,
+  SlotSchema,
+  StuffTypeSchema,
+} from "./db-schemas";
 import fs from "node:fs/promises";
 
 if (!process.env.MONGO_URL) {
@@ -63,7 +68,27 @@ const stuffGearSchemaFixtures = [
   { name: "Schéma d'ingénierie" },
 ];
 
+const DungeonSchemaFixtures = [
+  { name: "Les profondeurs de Brassenoire" },
+  { name: "Gnomeregan" },
+  { name: "Le temple d'Atal'Hakkar" },
+];
+
 async function insertSlotsFixtures() {
+  try {
+    for await (const slot of DungeonSchemaFixtures) {
+      await DungeonSchema.findOneAndUpdate(slot, slot, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true,
+      });
+    }
+  } catch (err: any) {
+    console.log(err);
+  }
+}
+
+async function insertDungeonsFixtures() {
   try {
     for await (const slot of SlotSchemaFixtures) {
       await SlotSchema.findOneAndUpdate(slot, slot, {
@@ -92,12 +117,12 @@ async function insertStuffTypesFixtures() {
 }
 
 async function insertItemsFixtures() {
-  await fs
+  return fs
     .readFile("./data.json", "utf-8")
     .then(async (data) => {
       const items: any[] = await JSON.parse(data);
       for await (const item of items) {
-        const { gearType, slot } = item;
+        const { gearType, slot, dungeon } = item;
         const findSlot = slot.length
           ? await SlotSchema.findOne({ name: slot }).exec()
           : undefined;
@@ -106,12 +131,18 @@ async function insertItemsFixtures() {
               name: gearType,
             }).exec()
           : undefined;
-        const a = await ItemSchema.findOneAndUpdate(
+        const dungeonType = dungeon.length
+          ? await DungeonSchema.findOne({
+              name: dungeon,
+            }).exec()
+          : undefined;
+        await ItemSchema.findOneAndUpdate(
           { wowId: item.wowId },
           {
             ...item,
             slot: findSlot?._id,
             gearType: findGearType?._id,
+            dungeon: dungeonType?._id,
           },
           {
             upsert: true,
@@ -134,6 +165,7 @@ async function insertItemsFixtures() {
     await mongoose.connect(process.env.MONGO_URL!, {
       dbName: process.env.MONGO_DB_NAME,
     });
+    await insertDungeonsFixtures();
     await insertSlotsFixtures();
     await insertStuffTypesFixtures();
     await insertItemsFixtures();
