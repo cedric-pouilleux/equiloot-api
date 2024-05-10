@@ -18,5 +18,6 @@ COPY . .
 
 RUN pnpm run prebuild
 RUN pnpm run build
+RUN npx -y playwright install --with-deps
 
 CMD [ "pnpm", "run", "prod" ]

@@ -1,4 +1,4 @@
-FROM node:lts-bullseye-slim as base
+FROM mcr.microsoft.com/playwright as base
 
 ENV NODE_ENV=development
 
@@ -12,11 +12,13 @@ FROM base as build
 
 COPY package*.json ./
 
-RUN pnpm install
+RUN pnpm install 
 
 # Run
 FROM base
 
-COPY --from=build /usr/src/api/node_modules /usr/src/api/node_modules
+RUN npx -y playwright install --with-deps
+
+COPY --from=build /usr/src/api/node_modules /usr/src/api/node_modules 
 
 CMD ["pnpm", "run", "dev"]

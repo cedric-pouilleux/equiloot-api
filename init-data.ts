@@ -123,21 +123,25 @@ async function insertItemsFixtures() {
       const items: any[] = await JSON.parse(data);
       for await (const item of items) {
         const { gearType, slot, dungeon } = item;
+
         const findSlot = slot.length
           ? await SlotSchema.findOne({ name: slot }).exec()
           : undefined;
+
         const findGearType = gearType.length
           ? await StuffTypeSchema.findOne({
               name: gearType,
             }).exec()
           : undefined;
-        const dungeonType = dungeon.length
+
+        const dungeonType = dungeon
           ? await DungeonSchema.findOne({
               name: dungeon,
             }).exec()
           : undefined;
-        await ItemSchema.findOneAndUpdate(
-          { wowId: item.wowId },
+
+        await ItemSchema.findByIdAndUpdate(
+          item._id,
           {
             ...item,
             slot: findSlot?._id,

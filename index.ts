@@ -1,35 +1,24 @@
 import { type Express } from "express";
 import express from "express";
-import { ItemSchema } from "./db-schemas";
 import cors from "cors";
-import mongoose from "mongoose";
-
-if (!process.env.MONGO_URL) {
-  throw new Error("MONGO_URL environment variable required");
-}
-
-if (!process.env.MONGO_DB_NAME) {
-  throw new Error("MONGO_DB_NAME environment variable required");
-}
+import { itemsExtract } from "./routes/admin";
+import { items } from "./routes/items";
+import "./mongodb.config";
+import "./cloudinary.config";
 
 const app: Express = express();
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/items", async (req, res) => {
-  try {
-    await mongoose.connect(process.env.MONGO_URL!, {
-      dbName: process.env.MONGO_DB_NAME,
-    });
-  } catch (e) {
-    console.log(e);
-  } finally {
-    const items = await ItemSchema.find()
-      .populate("slot")
-      .populate("gearType")
-      .exec();
-    await mongoose.disconnect();
-    res.json(items);
-  }
+app.get("/items", async (_, res) => {
+  const response = await items();
+  res.json(response);
+});
+
+app.post("/extract", async (req, res) => {
+  const response = await itemsExtract(req.body);
+  res.json(response);
 });
 
 app.listen(4000, "0.0.0.0");
