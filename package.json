@@ -11,9 +11,7 @@
     "lint:fix": "eslint --fix",
     "dev": "nodemon -L index.ts",
     "build": "tsup *.ts",
-    "prod": "node dist/index.js",
-    "populate:db": "npx ts-node init-data.ts",
-    "populate-dev:db": "node -r ts-node/register --env-file=.env.dev init-data.ts"
+    "prod": "node dist/index.js"
   },
   "author": "Cedric Pouilleux",
   "license": "ISC",
